@@ -10,6 +10,7 @@ import axios from "axios";
 import { obtenerPerfil } from "./services/auth.service";
 import { useAuthStore } from "./store/auth.store";
 import Registro from "./pages/Registro";
+import POS from "./pages/POS";
 
 function App() {
   const [cargandoSesion, setCargandoSesion] = useState(true);
@@ -82,6 +83,14 @@ function App() {
         element={
           <RutaProtegida rolesPermitidos={["ADMIN", "CAJERO"]}>
             <Admin />
+          </RutaProtegida>
+        }
+      />
+      <Route
+        path="/pos"
+        element={
+          <RutaProtegida rolesPermitidos={["ADMIN", "CAJERO"]}>
+            <POS />
           </RutaProtegida>
         }
       />
