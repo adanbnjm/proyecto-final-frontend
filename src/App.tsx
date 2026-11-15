@@ -1,17 +1,18 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import Login from "./pages/Login";
-import Tienda from "./pages/Tienda";
-import Admin from "./pages/Admin";
 import RutaProtegida from "./components/RutaProtegida";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import axios from "axios";
-import MisPedidos from "./pages/MisPedidos";
 
 import { obtenerPerfil } from "./services/auth.service";
 import { useAuthStore } from "./store/auth.store";
 import Registro from "./pages/Registro";
-import POS from "./pages/POS";
+
+const Tienda = lazy(() => import("./pages/Tienda"));
+const MisPedidos = lazy(() => import("./pages/MisPedidos"));
+const Admin = lazy(() => import("./pages/Admin"));
+const POS = lazy(() => import("./pages/POS"));
 
 function App() {
   const [cargandoSesion, setCargandoSesion] = useState(true);
@@ -66,46 +67,54 @@ function App() {
     );
   }
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/registro" element={<Registro />} />
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center">
+          <p className="text-lg font-medium">Cargando página...</p>
+        </main>
+      }
+    >
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
 
-      <Route
-        path="/tienda"
-        element={
-          <RutaProtegida rolesPermitidos={["CLIENTE"]}>
-            <Tienda />
-          </RutaProtegida>
-        }
-      />
-      <Route
-        path="/mis-pedidos"
-        element={
-          <RutaProtegida rolesPermitidos={["CLIENTE"]}>
-            <MisPedidos />
-          </RutaProtegida>
-        }
-      />
+        <Route
+          path="/tienda"
+          element={
+            <RutaProtegida rolesPermitidos={["CLIENTE"]}>
+              <Tienda />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/mis-pedidos"
+          element={
+            <RutaProtegida rolesPermitidos={["CLIENTE"]}>
+              <MisPedidos />
+            </RutaProtegida>
+          }
+        />
 
-      <Route
-        path="/admin"
-        element={
-          <RutaProtegida rolesPermitidos={["ADMIN", "CAJERO"]}>
-            <Admin />
-          </RutaProtegida>
-        }
-      />
-      <Route
-        path="/pos"
-        element={
-          <RutaProtegida rolesPermitidos={["ADMIN", "CAJERO"]}>
-            <POS />
-          </RutaProtegida>
-        }
-      />
+        <Route
+          path="/admin"
+          element={
+            <RutaProtegida rolesPermitidos={["ADMIN", "CAJERO"]}>
+              <Admin />
+            </RutaProtegida>
+          }
+        />
+        <Route
+          path="/pos"
+          element={
+            <RutaProtegida rolesPermitidos={["ADMIN", "CAJERO"]}>
+              <POS />
+            </RutaProtegida>
+          }
+        />
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   );
 }
 
