@@ -19,8 +19,9 @@ export const obtenerCatalogo = async (): Promise<Producto[]> => {
 export interface ProductoAdministrativo extends Producto {
   costoAdquisicion: number | string;
   activo: boolean;
+  stockReservado: number;
+  stockDisponible: number;
 }
-
 export const obtenerProductosAdministrativos = async (): Promise<
   ProductoAdministrativo[]
 > => {

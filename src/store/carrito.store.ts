@@ -14,15 +14,11 @@ export const useCarritoStore = create<EstadoCarrito>((set) => ({
 
   agregarProducto: (producto) =>
     set((estado) => {
-      if (producto.stock <= 0) {
-        return estado;
-      }
-
-      const productoExistente = estado.productos.find(
+      const cantidadActual = estado.productos.filter(
         (item) => item.id === producto.id,
-      );
+      ).length;
 
-      if (productoExistente) {
+      if (producto.stock <= cantidadActual) {
         return estado;
       }
 
@@ -32,9 +28,20 @@ export const useCarritoStore = create<EstadoCarrito>((set) => ({
     }),
 
   quitarProducto: (id) =>
-    set((estado) => ({
-      productos: estado.productos.filter((producto) => producto.id !== id),
-    })),
+    set((estado) => {
+      const indice = estado.productos.findIndex(
+        (producto) => producto.id === id,
+      );
+
+      if (indice === -1) {
+        return estado;
+      }
+
+      const productos = [...estado.productos];
+      productos.splice(indice, 1);
+
+      return { productos };
+    }),
 
   vaciarCarrito: () => set({ productos: [] }),
 }));
