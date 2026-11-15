@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import FormularioProducto from "../components/admin/FormularioProducto";
 import TablaInventario from "../components/admin/TablaInventario";
@@ -75,12 +75,15 @@ export default function Admin() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("todas");
 
   // Filtrar productos por categoría.
-  const productosFiltrados =
-    categoriaSeleccionada === "todas"
-      ? productos
-      : productos.filter(
-          (producto) => producto.categoriaId === Number(categoriaSeleccionada),
-        );
+  const productosFiltrados = useMemo(() => {
+    if (categoriaSeleccionada === "todas") {
+      return productos;
+    }
+
+    return productos.filter(
+      (producto) => producto.categoriaId === Number(categoriaSeleccionada),
+    );
+  }, [productos, categoriaSeleccionada]);
 
   // Cargar categorías.
   useEffect(() => {
