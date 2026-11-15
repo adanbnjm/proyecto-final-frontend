@@ -7,9 +7,26 @@ export interface Caja {
   fechaApertura: string;
 }
 
+export interface ConciliacionCaja {
+  montoApertura: number;
+  totalVentas: number;
+  totalEfectivo: number;
+  totalTarjeta: number;
+  totalQR: number;
+  efectivoEsperado: number;
+  efectivoReportado: number;
+  diferencia: number;
+}
+
 interface RespuestaAbrirCaja {
   mensaje: string;
   caja: Caja;
+}
+
+interface RespuestaCerrarCaja {
+  mensaje: string;
+  caja: Caja;
+  conciliacion: ConciliacionCaja;
 }
 
 export const abrirCaja = async (
@@ -24,5 +41,17 @@ export const abrirCaja = async (
 
 export const obtenerCajaAbierta = async (): Promise<Caja | null> => {
   const respuesta = await api.get<Caja | null>("/cajas/abierta");
+  return respuesta.data;
+};
+
+export const cerrarCaja = async (
+  cajaId: number,
+  montoCierre: number,
+): Promise<RespuestaCerrarCaja> => {
+  const respuesta = await api.post<RespuestaCerrarCaja>(
+    `/cajas/${cajaId}/cerrar`,
+    { montoCierre },
+  );
+
   return respuesta.data;
 };
