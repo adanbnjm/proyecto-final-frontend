@@ -6,6 +6,7 @@ import Admin from "./pages/Admin";
 import RutaProtegida from "./components/RutaProtegida";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import MisPedidos from "./pages/MisPedidos";
 
 import { obtenerPerfil } from "./services/auth.service";
 import { useAuthStore } from "./store/auth.store";
@@ -74,6 +75,14 @@ function App() {
         element={
           <RutaProtegida rolesPermitidos={["CLIENTE"]}>
             <Tienda />
+          </RutaProtegida>
+        }
+      />
+      <Route
+        path="/mis-pedidos"
+        element={
+          <RutaProtegida rolesPermitidos={["CLIENTE"]}>
+            <MisPedidos />
           </RutaProtegida>
         }
       />
