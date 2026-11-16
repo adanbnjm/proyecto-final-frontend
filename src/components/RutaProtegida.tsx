@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import { useAuthStore } from "../store/auth.store";
 import type { Usuario } from "../services/auth.service";
 
 interface PropsRutaProtegida {
-  children: ReactNode;
+  children?: ReactNode;
   rolesPermitidos: Usuario["rol"][];
 }
 
@@ -26,5 +26,5 @@ export default function RutaProtegida({
     );
   }
 
-  return children;
+  return children ?? <Outlet />;
 }

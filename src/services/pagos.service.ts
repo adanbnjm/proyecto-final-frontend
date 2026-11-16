@@ -27,3 +27,7 @@ export const crearPago = async (
 
   return respuesta.data;
 };
+
+export const aprobarPago = async (pagoId: number): Promise<void> => {
+  await api.post(`/pagos/${pagoId}/aprobar`);
+};

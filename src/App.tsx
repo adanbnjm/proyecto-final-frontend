@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import LayoutCliente from "./components/cliente/LayoutCliente";
 
 import Login from "./pages/Login";
 import RutaProtegida from "./components/RutaProtegida";
@@ -12,7 +13,6 @@ import Registro from "./pages/Registro";
 const Tienda = lazy(() => import("./pages/Tienda"));
 const MisPedidos = lazy(() => import("./pages/MisPedidos"));
 const Admin = lazy(() => import("./pages/Admin"));
-const POS = lazy(() => import("./pages/POS"));
 
 function App() {
   const [cargandoSesion, setCargandoSesion] = useState(true);
@@ -79,21 +79,15 @@ function App() {
         <Route path="/registro" element={<Registro />} />
 
         <Route
-          path="/tienda"
           element={
             <RutaProtegida rolesPermitidos={["CLIENTE"]}>
-              <Tienda />
+              <LayoutCliente />
             </RutaProtegida>
           }
-        />
-        <Route
-          path="/mis-pedidos"
-          element={
-            <RutaProtegida rolesPermitidos={["CLIENTE"]}>
-              <MisPedidos />
-            </RutaProtegida>
-          }
-        />
+        >
+          <Route path="/tienda" element={<Tienda />} />
+          <Route path="/mis-pedidos" element={<MisPedidos />} />
+        </Route>
 
         <Route
           path="/admin"
@@ -107,7 +101,7 @@ function App() {
           path="/pos"
           element={
             <RutaProtegida rolesPermitidos={["ADMIN", "CAJERO"]}>
-              <POS />
+              <Navigate to="/admin" replace state={{ seccionInicial: "pos" }} />
             </RutaProtegida>
           }
         />

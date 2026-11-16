@@ -184,7 +184,7 @@ export default function SupervisionCajas() {
           return (
             <article
               key={caja.id}
-              className="rounded-xl border border-gray-200 p-5"
+              className="rounded-xl border border-slate-400 p-5"
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <h3 className="text-lg font-bold text-gray-900">
@@ -202,7 +202,7 @@ export default function SupervisionCajas() {
                 </span>
               </div>
 
-              <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-4 grid gap-4 border-t border-slate-400 pt-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
                   <p className="text-sm text-gray-500">Responsable</p>
                   <p className="font-semibold text-gray-900">
@@ -235,7 +235,7 @@ export default function SupervisionCajas() {
                 </div>
               </div>
 
-              <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+              <div className="mt-4 grid gap-3 border-t border-slate-400 pt-4 text-sm sm:grid-cols-2">
                 <p>
                   <span className="text-gray-500">Apertura: </span>
                   {formatoFecha(caja.fechaApertura)}
@@ -249,7 +249,7 @@ export default function SupervisionCajas() {
                 </p>
               </div>
 
-              <div className="mt-5 border-t border-gray-200 pt-4">
+              <div className="mt-5 border-t-2 border-slate-400 pt-4">
                 <h4 className="mb-3 font-semibold text-gray-800">
                   Resumen de ventas
                 </h4>
@@ -271,7 +271,7 @@ export default function SupervisionCajas() {
                 </p>
               </div>
 
-              <details className="mt-5 border-t border-gray-200 pt-4">
+              <details className="mt-5 border-t-2 border-slate-400 pt-4">
                 <summary className="cursor-pointer font-semibold text-blue-700">
                   Ver detalles de ventas y movimientos
                 </summary>
@@ -317,7 +317,7 @@ export default function SupervisionCajas() {
                     )}
                   </div>
 
-                  <div>
+                  <div className="border-t border-slate-300 pt-4">
                     <h4 className="mb-3 font-semibold">Movimientos de caja</h4>
 
                     {caja.movimientos.length === 0 ? (

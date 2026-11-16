@@ -9,10 +9,8 @@ function POS() {
   const pos = usePOS();
 
   return (
-    <main className="min-h-screen bg-gray-100 p-6 text-gray-900">
+    <section className="text-gray-900">
       <div className="mx-auto max-w-7xl space-y-6">
-        <h1 className="text-3xl font-bold">Punto de Venta</h1>
-
         {/* Mensajes */}
         {pos.mensajes.error && (
           <p className="rounded-lg bg-red-100 p-3 text-red-700">
@@ -40,7 +38,7 @@ function POS() {
         {/* Historial */}
         <HistorialVentas actualizar={pos.actualizarHistorial} />
       </div>
-    </main>
+    </section>
   );
 }
 
