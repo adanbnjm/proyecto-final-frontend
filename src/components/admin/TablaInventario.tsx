@@ -67,7 +67,10 @@ export default function TablaInventario({
 
             <tbody>
               {productos.map((producto) => (
-                <tr key={producto.id} className="border-t border-gray-100">
+                <tr
+                  key={producto.id}
+                  className="border-t border-slate-900 transition-colors hover:bg-orange-50/50"
+                >
                   <td className="p-4">{producto.codigo}</td>
                   <td className="p-4">{producto.nombre}</td>
                   <td className="p-4">
