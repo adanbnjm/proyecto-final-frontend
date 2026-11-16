@@ -5,11 +5,7 @@ import { registrarVenta, type MetodoPago } from "../services/ventas.service";
 
 import { obtenerCatalogo, type Producto } from "../services/productos.service";
 
-import {
-  abrirCaja,
-  obtenerCajaAbierta,
-  type Caja,
-} from "../services/cajas.service";
+import { obtenerCajaAbierta, type Caja } from "../services/cajas.service";
 
 import { usePOSStore } from "../store/pos.store";
 
@@ -36,9 +32,9 @@ export function usePOS() {
   const [actualizarCatalogo, setActualizarCatalogo] = useState(0);
 
   // Caja
-  const [montoApertura, setMontoApertura] = useState("");
+
   const [caja, setCaja] = useState<Caja | null>(null);
-  const [abriendoCaja, setAbriendoCaja] = useState(false);
+
   const [cargandoCaja, setCargandoCaja] = useState(true);
 
   // Mensajes
@@ -98,31 +94,6 @@ export function usePOS() {
     0,
   );
 
-  // Abrir caja.
-  const manejarAperturaCaja = async () => {
-    setError("");
-
-    const monto = Number(montoApertura);
-
-    if (montoApertura.trim() === "" || !Number.isFinite(monto) || monto < 0) {
-      setError("Ingresa un monto de apertura válido.");
-      return;
-    }
-
-    setAbriendoCaja(true);
-
-    try {
-      const respuesta = await abrirCaja(monto);
-
-      setCaja(respuesta.caja);
-      setMontoApertura("");
-    } catch (error) {
-      setError(obtenerMensajeError(error, "No se pudo abrir la caja."));
-    } finally {
-      setAbriendoCaja(false);
-    }
-  };
-
   // Registrar la venta.
   const manejarConfirmacionVenta = async () => {
     if (!caja) {
@@ -167,10 +138,6 @@ export function usePOS() {
     caja: {
       caja,
       cargandoCaja,
-      montoApertura,
-      setMontoApertura,
-      abriendoCaja,
-      manejarAperturaCaja,
     },
 
     catalogo: {

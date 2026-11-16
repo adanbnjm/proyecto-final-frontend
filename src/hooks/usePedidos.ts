@@ -8,6 +8,8 @@ import {
   type Pedido,
 } from "../services/pedidos.service";
 
+import { aprobarPago } from "../services/pagos.service";
+
 export function usePedidos() {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [cargando, setCargando] = useState(true);
@@ -87,6 +89,14 @@ export function usePedidos() {
       "Pedido marcado como entregado.",
     );
 
+  // Confirmar el pago recibido por el cajero.
+  const manejarConfirmacionPago = (pedidoId: number, pagoId: number) =>
+    ejecutarAccion(
+      pedidoId,
+      () => aprobarPago(pagoId),
+      "Pago confirmado correctamente.",
+    );
+
   return {
     pedidos,
     cargando,
@@ -96,5 +106,6 @@ export function usePedidos() {
     cargarPedidos,
     manejarEnvio,
     manejarEntrega,
+    manejarConfirmacionPago,
   };
 }

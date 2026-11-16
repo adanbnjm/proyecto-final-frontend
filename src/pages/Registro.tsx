@@ -33,7 +33,6 @@ export default function Registro() {
       });
 
       guardarSesion(respuesta.accessToken, respuesta.usuario);
-
       navegar("/tienda");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
@@ -48,140 +47,159 @@ export default function Registro() {
     }
   };
 
+  const clasesInput =
+    "w-full rounded-xl border border-slate-700 bg-[#0F172A] px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition-colors focus:border-orange-500 focus:ring-1 focus:ring-orange-500";
+
+  const clasesLabel =
+    "mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-300";
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-8">
-      <form
-        onSubmit={handleSubmit(enviarFormulario)}
-        className="w-full max-w-md space-y-4 rounded-xl bg-white p-8 shadow-lg"
-      >
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Crear cuenta</h1>
+    <main className="flex min-h-screen items-center justify-center bg-[#0F172A] px-4 py-8 text-slate-100">
+      <div className="w-full max-w-md">
+        <section className="rounded-2xl border border-slate-700/60 bg-[#1E293B] p-7 shadow-2xl shadow-black/40 sm:p-10">
+          <header className="mb-8 text-center">
+            <div className="mb-6 flex items-center justify-center gap-2.5">
+              <span className="font-extrabold tracking-tight text-white">
+                NOVA TECH
+              </span>
+              <span className="rounded border border-orange-500/30 bg-orange-500/20 px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-orange-400">
+                POS & COMMERCE
+              </span>
+            </div>
 
-          <p className="mt-2 text-gray-500">
-            Regístrate para comprar en nuestra tienda.
-          </p>
-        </div>
+            <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Crear cuenta
+            </h1>
 
-        <div>
-          <label htmlFor="nombre" className="mb-1 block font-medium">
-            Nombre completo
-          </label>
-
-          <input
-            id="nombre"
-            type="text"
-            {...register("nombre")}
-            className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-orange-500"
-            placeholder="Tu nombre"
-          />
-
-          {errors.nombre && (
-            <p className="mt-1 text-sm text-red-600">{errors.nombre.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="celular" className="mb-1 block font-medium">
-            Celular
-          </label>
-
-          <input
-            id="celular"
-            type="tel"
-            {...register("celular")}
-            className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-orange-500"
-            placeholder="70000000"
-          />
-
-          {errors.celular && (
-            <p className="mt-1 text-sm text-red-600">
-              {errors.celular.message}
+            <p className="mt-2 text-sm text-[#94A3B8]">
+              Regístrate para comprar en nuestra tienda.
             </p>
-          )}
-        </div>
+          </header>
 
-        <div>
-          <label htmlFor="ci" className="mb-1 block font-medium">
-            Carnet de identidad (opcional)
-          </label>
+          <form onSubmit={handleSubmit(enviarFormulario)} className="space-y-5">
+            <div>
+              <label htmlFor="nombre" className={clasesLabel}>
+                Nombre completo
+              </label>
+              <input
+                id="nombre"
+                type="text"
+                autoComplete="name"
+                {...register("nombre")}
+                className={clasesInput}
+                placeholder="Tu nombre"
+              />
+              {errors.nombre && (
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.nombre.message}
+                </p>
+              )}
+            </div>
 
-          <input
-            id="ci"
-            type="text"
-            {...register("ci")}
-            className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-orange-500"
-            placeholder="Tu CI"
-          />
+            <div>
+              <label htmlFor="celular" className={clasesLabel}>
+                Celular
+              </label>
+              <input
+                id="celular"
+                type="tel"
+                autoComplete="tel"
+                {...register("celular")}
+                className={clasesInput}
+                placeholder="70000000"
+              />
+              {errors.celular && (
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.celular.message}
+                </p>
+              )}
+            </div>
 
-          {errors.ci && (
-            <p className="mt-1 text-sm text-red-600">
-              El CI no puede superar los 30 caracteres.
+            <div>
+              <label htmlFor="ci" className={clasesLabel}>
+                Carnet de identidad (opcional)
+              </label>
+              <input
+                id="ci"
+                type="text"
+                {...register("ci")}
+                className={clasesInput}
+                placeholder="Tu CI"
+              />
+              {errors.ci && (
+                <p className="mt-1 text-sm text-red-400">{errors.ci.message}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="email" className={clasesLabel}>
+                Correo electrónico
+              </label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="email"
+                {...register("email")}
+                className={clasesInput}
+                placeholder="correo@ejemplo.com"
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="password" className={clasesLabel}>
+                Contraseña
+              </label>
+              <input
+                id="password"
+                type="password"
+                autoComplete="new-password"
+                {...register("password")}
+                className={clasesInput}
+                placeholder="Mínimo 8 caracteres"
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-400">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {errorServidor && (
+              <p
+                role="alert"
+                className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300"
+              >
+                {errorServidor}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#F97316] px-5 py-3.5 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#EA580C] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-[#1E293B] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
+            </button>
+          </form>
+
+          <div className="mt-8 border-t border-slate-700/60 pt-6 text-center">
+            <p className="text-sm text-slate-400">
+              ¿Ya tienes una cuenta?{" "}
+              <Link
+                to="/"
+                className="font-semibold text-[#F97316] transition-colors hover:text-orange-400 hover:underline"
+              >
+                Inicia sesión
+              </Link>
             </p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="email" className="mb-1 block font-medium">
-            Correo electrónico
-          </label>
-
-          <input
-            id="email"
-            type="email"
-            {...register("email")}
-            className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-orange-500"
-            placeholder="correo@ejemplo.com"
-          />
-
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="password" className="mb-1 block font-medium">
-            Contraseña
-          </label>
-
-          <input
-            id="password"
-            type="password"
-            {...register("password")}
-            className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-orange-500"
-            placeholder="Mínimo 8 caracteres"
-          />
-
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-600">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
-
-        {errorServidor && (
-          <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
-            {errorServidor}
-          </p>
-        )}
-
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full rounded-lg bg-orange-600 p-3 font-semibold text-white hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
-        </button>
-
-        <p className="text-center text-sm text-gray-600">
-          ¿Ya tienes una cuenta?{" "}
-          <Link
-            to="/"
-            className="font-semibold text-orange-600 hover:underline"
-          >
-            Inicia sesión
-          </Link>
-        </p>
-      </form>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

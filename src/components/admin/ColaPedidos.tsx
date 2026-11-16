@@ -8,6 +8,7 @@ interface Props {
   pedidoProcesando: number | null;
   onEnviar: (pedidoId: number) => void;
   onEntregar: (pedidoId: number) => void;
+  onConfirmarPago: (pedidoId: number, pagoId: number) => void;
 }
 
 const obtenerClaseEstado = (estado: Pedido["estado"]) => {
@@ -41,6 +42,7 @@ export default function ColaPedidos({
   pedidoProcesando,
   onEnviar,
   onEntregar,
+  onConfirmarPago,
 }: Props) {
   return (
     <section className="overflow-hidden rounded-xl bg-white shadow">
@@ -163,6 +165,27 @@ export default function ColaPedidos({
               </div>
 
               <div className="mt-5 flex flex-wrap justify-end gap-2">
+                {pedido.estado === "PENDIENTE" &&
+                  pedido.pagos.some((pago) => pago.estado === "PENDIENTE") && (
+                    <button
+                      type="button"
+                      disabled={pedidoProcesando === pedido.id}
+                      onClick={() => {
+                        const pagoPendiente = pedido.pagos.find(
+                          (pago) => pago.estado === "PENDIENTE",
+                        );
+
+                        if (pagoPendiente) {
+                          onConfirmarPago(pedido.id, pagoPendiente.id);
+                        }
+                      }}
+                      className="rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {pedidoProcesando === pedido.id
+                        ? "Procesando..."
+                        : "Confirmar pago"}
+                    </button>
+                  )}
                 {pedido.estado === "PAGADO" && (
                   <button
                     type="button"
