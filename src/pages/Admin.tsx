@@ -8,6 +8,7 @@ import FormularioPedidoManual from "../components/admin/FormularioPedidoManual";
 import { usePedidoManual } from "../hooks/usePedidoManual";
 import type { DatosPedidoManual } from "../services/pedidos.service";
 import GestionCaja from "../components/admin/GestionCaja";
+import SupervisionCajas from "../components/admin/SupervisionCajas";
 
 import {
   obtenerCatalogoCategorias,
@@ -106,7 +107,8 @@ export default function Admin() {
       <p className="mb-8 mt-2 text-gray-600">
         Gestión del inventario de productos.
       </p>
-      {esAdministrador && <GestionCaja />}
+      {(esAdministrador || usuario?.rol === "CAJERO") && <GestionCaja />}
+      {esAdministrador && <SupervisionCajas />}
 
       {/* Formulario disponible solamente para ADMIN */}
       {esAdministrador && (
